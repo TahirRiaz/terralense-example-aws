@@ -52,8 +52,7 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 
 # Application Load Balancer
 module "alb" {
-  source  = ".modules/alb/aws"
-  version = "~> 9.0"
+  source = "../../modules/alb"
 
   name               = "${var.environment}-alb"
   load_balancer_type = "application"
@@ -203,8 +202,7 @@ resource "aws_launch_template" "web" {
 
 # Auto Scaling Group
 module "asg" {
-  source  = ".modules/autoscaling/aws"
-  version = "~> 7.0"
+  source = "../../modules/autoscaling"
 
   name = "${var.environment}-web-asg"
 

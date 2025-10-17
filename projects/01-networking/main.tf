@@ -1,7 +1,6 @@
-# VPC Module from public registry
+# VPC Module from local modules
 module "vpc" {
-  source  = ".modules/vpc/aws"
-  version = "~> 5.0"
+  source = "../../modules/vpc"
 
   name = "${var.environment}-vpc"
   cidr = var.vpc_cidr
