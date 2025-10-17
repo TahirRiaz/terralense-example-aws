@@ -35,7 +35,7 @@ resource "aws_secretsmanager_secret_version" "db_password" {
 
 # RDS PostgreSQL Instance using official module
 module "rds" {
-  source  = "modules/rds/aws"
+  source  = ".modules/rds/aws"
   version = "~> 6.0"
 
   identifier = "${var.environment}-postgres"
@@ -90,7 +90,7 @@ module "rds" {
 
 # RDS Read Replica for scaling reads
 module "rds_replica" {
-  source  = "modules/rds/aws"
+  source  = ".modules/rds/aws"
   version = "~> 6.0"
 
   identifier = "${var.environment}-postgres-replica"

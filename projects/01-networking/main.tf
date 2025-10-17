@@ -1,6 +1,6 @@
 # VPC Module from public registry
 module "vpc" {
-  source  = "modules/vpc/aws"
+  source  = ".modules/vpc/aws"
   version = "~> 5.0"
 
   name = "${var.environment}-vpc"
