@@ -2,7 +2,7 @@
 # This is a wrapper around the official Terraform AWS RDS module
 
 module "rds" {
-  source  = "../rds/aws"
+  source  = "terraform-aws-modules/rds/aws"
   version = "~> 6.0"
 
   identifier = var.identifier
