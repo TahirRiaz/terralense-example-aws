@@ -52,7 +52,7 @@ resource "aws_iam_instance_profile" "ec2_profile" {
 
 # Application Load Balancer
 module "alb" {
-  source  = "terraform-aws-modules/alb/aws"
+  source  = "modules/alb/aws"
   version = "~> 9.0"
 
   name               = "${var.environment}-alb"
@@ -203,7 +203,7 @@ resource "aws_launch_template" "web" {
 
 # Auto Scaling Group
 module "asg" {
-  source  = "terraform-aws-modules/autoscaling/aws"
+  source  = "modules/autoscaling/aws"
   version = "~> 7.0"
 
   name = "${var.environment}-web-asg"
