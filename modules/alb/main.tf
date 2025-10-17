@@ -2,7 +2,7 @@
 # This is a wrapper around the official Terraform AWS ALB module
 
 module "alb" {
-  source  = "terraform-aws-modules/alb/aws"
+  source  = "../alb/aws"
   version = "~> 9.0"
 
   name               = var.name

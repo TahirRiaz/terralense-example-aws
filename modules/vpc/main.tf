@@ -2,7 +2,7 @@
 # This is a wrapper around the official Terraform AWS VPC module
 
 module "vpc" {
-  source  = "terraform-aws-modules/vpc/aws"
+  source  = "../vpc/aws"
   version = "~> 5.0"
 
   name = var.name

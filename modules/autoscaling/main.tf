@@ -2,7 +2,7 @@
 # This is a wrapper around the official Terraform AWS Auto Scaling module
 
 module "autoscaling" {
-  source  = "terraform-aws-modules/autoscaling/aws"
+  source  = "../autoscaling/aws"
   version = "~> 7.0"
 
   name = var.name
