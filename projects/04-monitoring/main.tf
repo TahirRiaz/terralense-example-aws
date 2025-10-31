@@ -8,7 +8,7 @@ locals {
   nat_gateway_ids  = data.terraform_remote_state.networking.outputs.nat_gateway_ids
 
   # Extract load balancer name from ARN
-  alb_suffix = split("/", local.alb_arn)[1]
+  alb_suffix          = split("/", local.alb_arn)[1]
   target_group_suffix = split(":", local.target_group_arn)[5]
 }
 
@@ -338,10 +338,10 @@ resource "aws_cloudwatch_metric_alarm" "application_errors" {
 
 # Composite Alarm for overall system health
 resource "aws_cloudwatch_composite_alarm" "system_health" {
-  alarm_name          = "${var.environment}-system-health"
-  alarm_description   = "Composite alarm for overall system health"
-  actions_enabled     = true
-  alarm_actions       = [aws_sns_topic.alarms.arn]
+  alarm_name        = "${var.environment}-system-health"
+  alarm_description = "Composite alarm for overall system health"
+  actions_enabled   = true
+  alarm_actions     = [aws_sns_topic.alarms.arn]
 
   alarm_rule = join(" OR ", [
     "ALARM(${aws_cloudwatch_metric_alarm.alb_unhealthy_hosts.alarm_name})",

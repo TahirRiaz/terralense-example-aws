@@ -1,9 +1,9 @@
 locals {
-  vpc_id                         = data.terraform_remote_state.networking.outputs.vpc_id
-  public_subnet_ids              = data.terraform_remote_state.networking.outputs.public_subnet_ids
-  private_subnet_ids             = data.terraform_remote_state.networking.outputs.private_subnet_ids
-  application_security_group_id  = data.terraform_remote_state.networking.outputs.application_security_group_id
-  alb_security_group_id          = data.terraform_remote_state.networking.outputs.alb_security_group_id
+  vpc_id                        = data.terraform_remote_state.networking.outputs.vpc_id
+  public_subnet_ids             = data.terraform_remote_state.networking.outputs.public_subnet_ids
+  private_subnet_ids            = data.terraform_remote_state.networking.outputs.private_subnet_ids
+  application_security_group_id = data.terraform_remote_state.networking.outputs.application_security_group_id
+  alb_security_group_id         = data.terraform_remote_state.networking.outputs.alb_security_group_id
 }
 
 # IAM Role for EC2 instances
@@ -124,6 +124,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "alb_logs" {
     id     = "delete-old-logs"
     status = "Enabled"
 
+    filter {
+      prefix = ""
+    }
+
     expiration {
       days = 90
     }
@@ -206,12 +210,12 @@ module "asg" {
 
   name = "${var.environment}-web-asg"
 
-  min_size            = var.asg_min_size
-  max_size            = var.asg_max_size
-  desired_capacity    = var.asg_desired_capacity
-  health_check_type   = "ELB"
+  min_size                  = var.asg_min_size
+  max_size                  = var.asg_max_size
+  desired_capacity          = var.asg_desired_capacity
+  health_check_type         = "ELB"
   health_check_grace_period = 300
-  vpc_zone_identifier = local.private_subnet_ids
+  vpc_zone_identifier       = local.private_subnet_ids
 
   target_group_arns = [module.alb.target_groups["web"].arn]
 
@@ -228,7 +232,7 @@ module "asg" {
   # Scaling policies
   scaling_policies = {
     cpu-scale-up = {
-      policy_type        = "TargetTrackingScaling"
+      policy_type = "TargetTrackingScaling"
       target_tracking_configuration = {
         predefined_metric_specification = {
           predefined_metric_type = "ASGAverageCPUUtilization"

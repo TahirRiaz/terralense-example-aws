@@ -1,8 +1,8 @@
 locals {
-  vpc_id                        = data.terraform_remote_state.networking.outputs.vpc_id
-  database_subnet_ids           = data.terraform_remote_state.networking.outputs.database_subnet_ids
-  database_subnet_group_name    = data.terraform_remote_state.networking.outputs.database_subnet_group_name
-  database_security_group_id    = data.terraform_remote_state.networking.outputs.database_security_group_id
+  vpc_id                     = data.terraform_remote_state.networking.outputs.vpc_id
+  database_subnet_ids        = data.terraform_remote_state.networking.outputs.database_subnet_ids
+  database_subnet_group_name = data.terraform_remote_state.networking.outputs.database_subnet_group_name
+  database_security_group_id = data.terraform_remote_state.networking.outputs.database_security_group_id
 }
 
 # Generate random password for database
@@ -35,8 +35,7 @@ resource "aws_secretsmanager_secret_version" "db_password" {
 
 # RDS PostgreSQL Instance using official module
 module "rds" {
-  source  = "../../modules/rds"
-  version = "~> 6.0"
+  source = "../../modules/rds"
 
   identifier = "${var.environment}-postgres"
 
@@ -90,8 +89,7 @@ module "rds" {
 
 # RDS Read Replica for scaling reads
 module "rds_replica" {
-  source  = "../../modules/rds"
-  version = "~> 6.0"
+  source = "../../modules/rds"
 
   identifier = "${var.environment}-postgres-replica"
 
@@ -122,7 +120,7 @@ module "rds_replica" {
   performance_insights_enabled          = true
   performance_insights_retention_period = 7
 
-  create_db_subnet_group = false
+  create_db_subnet_group    = false
   create_db_parameter_group = false
 
   tags = {
